@@ -15,11 +15,11 @@ public class Campaign implements Serializable {
 
     private String name;
 
-    @ManyToOne
-    private User master;
-
-    @ManyToMany
-    private List<User> players;
+//    @ManyToOne
+//    private User master;
+//
+//    @ManyToMany
+//    private List<User> players;
 
     // One map associated with the campaign
 //    @OneToOne(cascade = CascadeType.ALL)

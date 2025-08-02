@@ -16,15 +16,16 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String characterName;
+    private String name;
 
 //    private Race race;
 
 //    private Alignment alignment;
 
-    private Integer xpPoints;
-
-    private Integer hp;
+    //TODO move into CampaignCharacter
+//    private Integer xpPoints;
+//
+//    private Integer hp;
 
     private Integer armor;
 
@@ -34,9 +35,6 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User creator;
 
-    @ManyToOne
-    @JoinColumn(name = "campaign_id")
-    private Campaign campaign;
 }
