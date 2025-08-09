@@ -22,11 +22,6 @@ public class Character {
 
 //    private Alignment alignment;
 
-    //TODO move into CampaignCharacter
-//    private Integer xpPoints;
-//
-//    private Integer hp;
-
     private Integer armor;
 
     private Integer speed;
