@@ -14,11 +14,11 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
 public class Map implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private int id;
 
     private String name;

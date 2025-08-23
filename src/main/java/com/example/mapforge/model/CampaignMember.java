@@ -1,6 +1,7 @@
 package com.example.mapforge.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Setter
 public class CampaignMember implements Serializable {
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private CampaignMemberPK id;
 
     @MapsId("ownerId")

@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
 public class CampaignActor implements Serializable {
 

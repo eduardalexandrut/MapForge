@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 public class User implements Serializable {
 
