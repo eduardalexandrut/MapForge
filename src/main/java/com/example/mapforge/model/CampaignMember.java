@@ -1,30 +1,31 @@
 package com.example.mapforge.model;
 
-import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
 
-@Entity
 @Getter
 @Setter
-public class CampaignMember implements Serializable {
+@Entity
+@Table(name = "campaign_members")
+public class CampaignMember {
     @EmbeddedId
     @EqualsAndHashCode.Include
     private CampaignMemberPK id;
 
-    @MapsId("ownerId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner")
+    @MapsId("owner")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @MapsId("campaignId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "campaign")
+    @MapsId("campaign")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "campaign", nullable = false)
     private Campaign campaign;
 
-    @Column(nullable = false)
+    @Column(name = "role", nullable = false, length = 10)
     private String role;
+
 }

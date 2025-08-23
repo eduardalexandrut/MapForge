@@ -1,38 +1,38 @@
 package com.example.mapforge.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.io.Serializable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
 import java.time.LocalDate;
 
-@Entity
 @Getter
 @Setter
-@ToString
-
-public class User implements Serializable {
-
+@Entity
+@Table(name = "users")
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    private String username;
-
+    @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
+
 }

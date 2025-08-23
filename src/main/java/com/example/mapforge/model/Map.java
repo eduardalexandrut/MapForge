@@ -1,31 +1,38 @@
 package com.example.mapforge.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Type;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
 
-@Entity
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
-@ToString
-public class Map implements Serializable {
+@Entity
+@Table(name = "maps")
+public class Map {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private int id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "width", nullable = false)
     private Integer width;
-
+    
+    @Column(name = "height", nullable = false)
     private Integer height;
+
+    @OneToMany(mappedBy = "map")
+    private Set<Campaign> campaigns = new LinkedHashSet<>();
+
 }

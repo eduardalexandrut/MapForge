@@ -1,32 +1,31 @@
 package com.example.mapforge.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
-@ToString
-public class CampaignActor implements Serializable {
-
+@Entity
+@Table(name = "campaign_actors")
+public class CampaignActor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Campaign campaign;
 
     private String type;
-
-    private Long ref;
-
+    
+    @Column(name = "ref_id", nullable = false)
+    private Integer refId;
+    
+    @Column(name = "xp", nullable = false)
     private Integer xp;
-
+    
+    @Column(name = "hp", nullable = false)
     private Integer hp;
+
 }

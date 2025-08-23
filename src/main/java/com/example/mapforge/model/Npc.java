@@ -1,30 +1,21 @@
 package com.example.mapforge.model;
 
-import com.example.mapforge.constants.Alignment;
-import com.example.mapforge.constants.Race;
+import com.example.mapforge.constants.NpcType;
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
 
 
-
 @Getter
 @Setter
 @Entity
-@Table(name = "characters")
-public class Character {
+@Table(name = "npcs")
+public class Npc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator", nullable = false)
-    private User creator;
-
-    @Column(name = "name", nullable = false)
-    private String name;
     
     @Column(name = "armor", nullable = false)
     private Integer armor;
@@ -35,9 +26,6 @@ public class Character {
     @Column(name = "weapon_damage", nullable = false)
     private Integer weaponDamage;
 
-    @Column(name = "race", nullable = false)
-    private Race race;
-
-    @Column(name = "alignment", nullable = false)
-    private Alignment alignment;
+    @Column(name = "type", nullable = false)
+    private NpcType type;
 }

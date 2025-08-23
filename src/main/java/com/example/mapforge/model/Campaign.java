@@ -1,29 +1,28 @@
 package com.example.mapforge.model;
 
-import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Type;
 
-import java.io.Serializable;
-import java.util.List;
+import jakarta.persistence.*;
 
-@Entity
 @Getter
 @Setter
-@ToString
-public class Campaign implements Serializable {
+@Entity
+@Table(name = "campaigns")
+public class Campaign {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
-
+    @Column(name = "id", nullable = false)
+    private Integer id;
+    
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
-
+    
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "map", nullable = false)
     private Map map;
 
 }
