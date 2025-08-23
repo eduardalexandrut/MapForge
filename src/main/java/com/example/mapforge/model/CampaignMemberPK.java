@@ -1,24 +1,40 @@
 package com.example.mapforge.model;
 
-import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-@Embeddable
 @Getter
 @Setter
+@Embeddable
 public class CampaignMemberPK implements Serializable {
-    private Long ownerId;
-    private Long campaignId;
+    private static final long serialVersionUID = -8205427271119416028L;
+    
+    @Column(name = "owner", nullable = false)
+    private Integer ownerId;
 
-    public CampaignMemberPK(Long ownerId, Long campaignId) {
-        this.ownerId = ownerId;
-        this.campaignId = campaignId;
+    
+    @Column(name = "campaign", nullable = false)
+    private Integer campaignId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CampaignMemberPK entity = (CampaignMemberPK) o;
+        return Objects.equals(this.ownerId, entity.ownerId) &&
+                Objects.equals(this.campaignId, entity.campaignId);
     }
 
-    public CampaignMemberPK() {
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(ownerId, campaignId);
     }
+
 }
