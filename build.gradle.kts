@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.liquibase.gradle") version "2.1.1"
 }
 
 group = "com.example"
@@ -36,8 +37,14 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     //Hibernate tools
-    implementation("org.hibernate:hibernate-tools:6.2.5.Final")
+    implementation("org.hibernate:hibernate-tools:5.5.7.Final")
     implementation("org.hibernate:hibernate-core:6.3.0.Final")
+
+    //Liquibase
+    implementation("org.liquibase:liquibase-core")
+
+    //Dotenv
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
 
 }
@@ -45,3 +52,4 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
