@@ -19,7 +19,6 @@ public class CampaignMemberPK implements Serializable {
     @Column(name = "owner", nullable = false)
     private Integer ownerId;
 
-    
     @Column(name = "campaign", nullable = false)
     private Integer campaignId;
 
