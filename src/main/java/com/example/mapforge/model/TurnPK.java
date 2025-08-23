@@ -1,5 +1,6 @@
 package com.example.mapforge.model;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,9 @@ import java.io.Serializable;
 @Setter
 @Embeddable
 public class TurnPK implements Serializable {
+    @Column(name = "index")
     private int index;
+
+    @Column(name = "campaignId")
     private Long campaignId;
 }

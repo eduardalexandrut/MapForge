@@ -15,12 +15,12 @@ public class CampaignMember {
     @EqualsAndHashCode.Include
     private CampaignMemberPK id;
 
-    @MapsId("owner")
+    @MapsId("ownerId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @MapsId("campaign")
+    @MapsId("campaignId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "campaign", nullable = false)
     private Campaign campaign;

@@ -19,7 +19,7 @@ public class Character {
     @Column(name = "id", nullable = false)
     private Integer id;
     
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator", nullable = false)
     private User creator;
 

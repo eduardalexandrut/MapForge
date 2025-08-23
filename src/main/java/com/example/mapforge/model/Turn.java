@@ -13,6 +13,7 @@ public class Turn {
     private TurnPK id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("campaignId") // maps the campaignId in PK to this relation
     @JoinColumn(name = "campaign", nullable = false)
     private Campaign campaign;
 

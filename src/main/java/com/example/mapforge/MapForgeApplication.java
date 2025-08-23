@@ -4,18 +4,31 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Map;
+
 @SpringBootApplication
 public class MapForgeApplication {
 
     public static void main(String[] args) {
-        var dotenv = Dotenv.configure().ignoreIfMissing().load();
+        SpringApplication app = new SpringApplication(MapForgeApplication.class);
 
-        // Set environment variables so Spring Boot can use them
-        dotenv.entries().forEach(entry ->
-                System.setProperty(entry.getKey(), entry.getValue())
-        );
+        // Load .env
+        var dotenv = io.github.cdimascio.dotenv.Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
 
-        SpringApplication.run(MapForgeApplication.class, args);
+        // Add .env values as Spring property source
+        app.addInitializers(applicationContext -> {
+            var env = (org.springframework.core.env.ConfigurableEnvironment) applicationContext.getEnvironment();
+
+            var map = new java.util.HashMap<String, Object>();
+            dotenv.entries().forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+
+            var propertySource = new org.springframework.core.env.MapPropertySource("dotenvProps", map);
+            env.getPropertySources().addFirst(propertySource);
+        });
+
+        app.run(args);
     }
 
 }
