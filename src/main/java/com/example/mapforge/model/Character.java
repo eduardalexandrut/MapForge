@@ -1,5 +1,7 @@
 package com.example.mapforge.model;
 
+import com.example.mapforge.constants.Alignment;
+import com.example.mapforge.constants.Race;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,9 +20,9 @@ public class Character {
 
     private String name;
 
-//    private Race race;
+    private Race race;
 
-//    private Alignment alignment;
+    private Alignment alignment;
 
     private Integer armor;
 

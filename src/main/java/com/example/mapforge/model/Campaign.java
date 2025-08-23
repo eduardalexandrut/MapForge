@@ -15,20 +15,9 @@ public class Campaign implements Serializable {
 
     private String name;
 
-//    @ManyToOne
-//    private User master;
-//
-//    @ManyToMany
-//    private List<User> players;
+    private String description;
 
-    // One map associated with the campaign
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private GameMap map;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Map map;
 
-    // All pawns on the map
-//    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
-//    private List<Pawn> pawns;
-
-    // Index to track current turn
-//    private int currentTurnIndex;
 }

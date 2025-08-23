@@ -32,6 +32,14 @@ dependencies {
     implementation("com.h2database:h2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
+    //Postgres
+    runtimeOnly("org.postgresql:postgresql")
+
+    //Hibernate tools
+    implementation("org.hibernate:hibernate-tools:6.2.5.Final")
+    implementation("org.hibernate:hibernate-core:6.3.0.Final")
+
+
 }
 
 tasks.withType<Test> {
