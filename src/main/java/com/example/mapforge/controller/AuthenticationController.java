@@ -4,10 +4,7 @@ import com.example.mapforge.model.dto.AuthResponseDTO;
 import com.example.mapforge.model.entity.User;
 import com.example.mapforge.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -41,5 +38,11 @@ public class AuthenticationController  {
             return ResponseEntity.badRequest().body(res.getMessage());
         }
         return ResponseEntity.ok(res.getUser());
+    }
+
+    //GET /api/v1/auth/signout
+    @GetMapping("/signout")
+    public ResponseEntity signout() {
+        return ResponseEntity.ok(new AuthResponseDTO(true, "Successfully signed out."));
     }
 }
