@@ -19,13 +19,13 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    // GET /api/users → all users
+    // GET /api/v1/users → all users
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // GET /api/users/{id} → single user by id
+    // GET /api/v1/users/{id} → single user by id
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id) {
         return userRepository.findById(id).orElse(null);
