@@ -1,4 +1,4 @@
-package com.example.mapforge.model;
+package com.example.mapforge.model.entity;
 
 import com.example.mapforge.constants.Alignment;
 import com.example.mapforge.constants.Race;

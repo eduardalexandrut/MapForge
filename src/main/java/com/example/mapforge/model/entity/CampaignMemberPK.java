@@ -1,4 +1,4 @@
-package com.example.mapforge.model;
+package com.example.mapforge.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

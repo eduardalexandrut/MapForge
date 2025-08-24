@@ -1,4 +1,4 @@
-package com.example.mapforge.model;
+package com.example.mapforge.model.entity;
 
 import jakarta.persistence.Column;
 import lombok.Getter;

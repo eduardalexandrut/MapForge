@@ -1,9 +1,12 @@
 package com.example.mapforge.service;
 
-import com.example.mapforge.model.User;
+import com.example.mapforge.model.dto.AuthResponseDTO;
+import com.example.mapforge.model.entity.User;
 import com.example.mapforge.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -19,21 +22,27 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    public User signUp(User user) {
+    public AuthResponseDTO signUp(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            return new AuthResponseDTO(false, "User already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return new AuthResponseDTO(true, "User saved successfully", savedUser);
     }
 
-    public String signIn(String email, String password) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    public AuthResponseDTO signIn(String email, String password) {
+        Optional<User> user = userRepository.findByEmail(email);
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Passwords do not match");
+        if (user.isEmpty()) {
+            return new AuthResponseDTO(false, "User not found");
         }
 
-        return jwtService.generateToken(user);
+        if (!passwordEncoder.matches(password, user.get().getPassword())) {
+            return new AuthResponseDTO(false, "Incorrect password");
+        }
+
+        String token = jwtService.generateToken(user.get());
+        return new AuthResponseDTO(true, "User signed in successfully", token);
     }
 }

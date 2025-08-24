@@ -1,9 +1,7 @@
 package com.example.mapforge.controller;
 
-import com.example.mapforge.model.Character;
-import com.example.mapforge.model.User;
+import com.example.mapforge.model.entity.Character;
 import com.example.mapforge.repository.CharacterRepository;
-import com.example.mapforge.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

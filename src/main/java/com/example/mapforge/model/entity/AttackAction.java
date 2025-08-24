@@ -1,27 +1,29 @@
-package com.example.mapforge.model;
-
-import lombok.Getter;
-import lombok.Setter;
+package com.example.mapforge.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "movement_actions")
-public class MovementAction {
+@Table(name = "attack_actions")
+public class AttackAction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "actor", nullable = false)
-    private CampaignActor actor;
+    @JoinColumn(name = "attacker", nullable = false)
+    private CampaignActor attacker;
 
-    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "attacked", nullable = false)
+    private CampaignActor attacked;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumns({
             @JoinColumn(name = "turn_index", referencedColumnName = "index", nullable = false),
@@ -29,12 +31,7 @@ public class MovementAction {
     })
     private Turn turns;
 
-    
-    @Column(name = "x", nullable = false)
-    private Integer x;
-
-    
-    @Column(name = "y", nullable = false)
-    private Integer y;
+    @Column(name = "damage", nullable = false)
+    private Integer damage;
 
 }

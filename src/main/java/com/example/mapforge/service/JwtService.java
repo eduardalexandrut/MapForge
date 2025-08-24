@@ -1,11 +1,10 @@
 package com.example.mapforge.service;
 
-import com.example.mapforge.model.User;
+import com.example.mapforge.model.entity.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

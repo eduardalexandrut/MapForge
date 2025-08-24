@@ -1,6 +1,6 @@
 package com.example.mapforge.repository;
 
-import com.example.mapforge.model.User;
+import com.example.mapforge.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
