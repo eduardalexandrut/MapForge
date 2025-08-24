@@ -19,12 +19,21 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-//    public User signUp(User user) {
-//        //check if there is already a user with the same email
-//        //set password encripted and save
-//    }
-//
-//    public String signIn(String email, String password) {
-//
-//    }
+    public User signUp(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public String signIn(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Passwords do not match");
+        }
+
+        return jwtService.generateToken(user);
+    }
 }

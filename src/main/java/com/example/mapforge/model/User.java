@@ -17,6 +17,9 @@ public class User {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "username", nullable = false)
+    private String username;
+
     @Column(name = "name", nullable = false)
     private String name;
 
