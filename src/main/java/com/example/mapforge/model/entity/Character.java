@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
-
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 
 @Getter
@@ -39,9 +40,11 @@ public class Character {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "race", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Race race;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "alignment", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Alignment alignment;
 }
