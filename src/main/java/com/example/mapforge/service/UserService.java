@@ -80,4 +80,16 @@ public class UserService {
 
         return Optional.of(userRepository.save(oldUser.get()));
     }
+
+    //FIXME set value null to fks
+    public Optional<User> deleteUser(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+
+        userRepository.deleteById(id);
+        return user;
+    }
 }

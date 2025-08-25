@@ -40,4 +40,12 @@ public class UserController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    // DELETE /api/v1/users/{id} -> delete a user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
+        return userService.deleteUser(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
