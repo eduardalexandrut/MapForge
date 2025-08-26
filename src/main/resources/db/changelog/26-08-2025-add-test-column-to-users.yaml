@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: test
+                  type: INT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: true

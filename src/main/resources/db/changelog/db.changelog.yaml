@@ -1,0 +1,552 @@
+databaseChangeLog:
+- changeSet:
+    id: 1756237235394-1
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: surname
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: date_of_birth
+            type: date
+        - column:
+            defaultValue: username
+            name: username
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1756237235394-2
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: campaign_actors_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: campaign
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: type
+            type: VARCHAR(3)
+        - column:
+            constraints:
+              nullable: false
+            name: ref_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: xp
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: hp
+            type: INTEGER
+        tableName: campaign_actors
+- changeSet:
+    id: 1756237235394-3
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: campaign_members_pkey
+            name: owner
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: campaign_members_pkey
+            name: campaign
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: role
+            type: VARCHAR(10)
+        tableName: campaign_members
+- changeSet:
+    id: 1756237235394-4
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: characters_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: creator
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: armor
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: speed
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: weapon_damage
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            defaultValue: LAWFUL_GOOD
+            name: alignment
+            type: ALIGNMENT_ENUM
+        - column:
+            constraints:
+              nullable: false
+            defaultValue: HUMAN
+            name: race
+            type: RACE_ENUM
+        tableName: characters
+- changeSet:
+    id: 1756237235394-5
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: npcs_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: armor
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: speed
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: weapon_damage
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            defaultValue: HUMAN
+            name: race
+            type: RACE_ENUM
+        tableName: npcs
+- changeSet:
+    id: 1756237235394-6
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: attack_actions_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: attacker
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: attacked
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: turn_index
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: campaign_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: damage
+            type: INTEGER
+        tableName: attack_actions
+- changeSet:
+    id: 1756237235394-7
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: campaigns_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: map
+            type: INTEGER
+        tableName: campaigns
+- changeSet:
+    id: 1756237235394-8
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: maps_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: description
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: width
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: height
+            type: INTEGER
+        tableName: maps
+- changeSet:
+    id: 1756237235394-9
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: movement_actions_pkey
+            name: id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: actor
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: turn_index
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: campaign_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: x
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: y
+            type: INTEGER
+        tableName: movement_actions
+- changeSet:
+    id: 1756237235394-10
+    author: Eduard (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: turns_pkey
+            name: index
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: actor
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: turns_pkey
+            name: campaign
+            type: INTEGER
+        tableName: turns
+- changeSet:
+    id: 1756237235394-11
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: attacked
+        baseTableName: attack_actions
+        constraintName: attack_actions_attacked_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaign_actors
+        validate: true
+- changeSet:
+    id: 1756237235394-12
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: attacker
+        baseTableName: attack_actions
+        constraintName: attack_actions_attacker_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaign_actors
+        validate: true
+- changeSet:
+    id: 1756237235394-13
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: turn_index,campaign_id
+        baseTableName: attack_actions
+        constraintName: attack_actions_turn_index_campaign_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: index,campaign
+        referencedTableName: turns
+        validate: true
+- changeSet:
+    id: 1756237235394-14
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: campaign
+        baseTableName: campaign_actors
+        constraintName: campaign_actors_campaign_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaigns
+        validate: true
+- changeSet:
+    id: 1756237235394-15
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: campaign
+        baseTableName: campaign_members
+        constraintName: campaign_members_campaign_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaigns
+        validate: true
+- changeSet:
+    id: 1756237235394-16
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: owner
+        baseTableName: campaign_members
+        constraintName: campaign_members_owner_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1756237235394-17
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: map
+        baseTableName: campaigns
+        constraintName: campaigns_map_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: maps
+        validate: true
+- changeSet:
+    id: 1756237235394-18
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: creator
+        baseTableName: characters
+        constraintName: characters_creator_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1756237235394-19
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: actor
+        baseTableName: movement_actions
+        constraintName: movement_actions_actor_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaign_actors
+        validate: true
+- changeSet:
+    id: 1756237235394-20
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: turn_index,campaign_id
+        baseTableName: movement_actions
+        constraintName: movement_actions_turn_index_campaign_id_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: index,campaign
+        referencedTableName: turns
+        validate: true
+- changeSet:
+    id: 1756237235394-21
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: actor
+        baseTableName: turns
+        constraintName: turns_actor_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaign_actors
+        validate: true
+- changeSet:
+    id: 1756237235394-22
+    author: Eduard (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: campaign
+        baseTableName: turns
+        constraintName: turns_campaign_fkey
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: campaigns
+        validate: true
+- include:
+    file: src/main/resources/db/changelog/26-08-2025-add-test-column-to-users.yaml
+- include:
+    file: src/main/resources/db/changelog/26-08-2025-remove-test-column-from-users.yaml
