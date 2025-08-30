@@ -550,3 +550,5 @@ databaseChangeLog:
     file: src/main/resources/db/changelog/26-08-2025-add-test-column-to-users.yaml
 - include:
     file: src/main/resources/db/changelog/26-08-2025-remove-test-column-from-users.yaml
+- include:
+    file: src/main/resources/db/changelog/30-08-2025-change-campaigns-pk-to-string.yaml

@@ -1,0 +1,222 @@
+databaseChangeLog:
+  # STEP 1 & 2: ALREADY RUN. DO NOT TOUCH.
+  - changeSet:
+      id: 3-add-uuid-columns
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: campaigns
+            columns:
+              - column:
+                  name: id_uuid
+                  type: UUID
+                  constraints: { nullable: false }
+                  defaultValueComputed: "gen_random_uuid()"
+        - addColumn:
+            tableName: campaign_actors
+            columns:
+              - column: { name: campaign_uuid, type: UUID }
+        - addColumn:
+            tableName: campaign_members
+            columns:
+              - column: { name: campaign_uuid, type: UUID }
+  - changeSet:
+      id: 4-populate-fk-columns
+      author: eduard
+      changes:
+        - sql:
+            comment: "Update campaign_members..."
+            sql: "UPDATE campaign_members cm SET campaign_uuid = (SELECT c.id_uuid FROM campaigns c WHERE c.id = cm.campaign);"
+        - sql:
+            comment: "Update campaign_actors..."
+            sql: "UPDATE campaign_actors ca SET campaign_uuid = (SELECT c.id_uuid FROM campaigns c WHERE c.id = ca.campaign);"
+
+  # STEP 3: Handle the 'turns' table. ALREADY RUN. DO NOT TOUCH.
+  - changeSet:
+      id: 4a-add-uuid-to-turns
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: turns
+            columns:
+              - column: { name: campaign_uuid, type: UUID }
+  - changeSet:
+      id: 4b-populate-turns-fk
+      author: eduard
+      changes:
+        - sql:
+            comment: "Update turns..."
+            sql: "UPDATE turns t SET campaign_uuid = (SELECT c.id_uuid FROM campaigns c WHERE c.id = t.campaign);"
+
+  # STEP 4: Add NEW changesets for attack_actions and movement_actions.
+  - changeSet:
+      id: 4c-add-uuid-to-action-tables # <-- NEW, UNIQUE ID
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: attack_actions
+            columns:
+              - column: { name: campaign_id_uuid, type: UUID }
+        - addColumn:
+            tableName: movement_actions
+            columns:
+              - column: { name: campaign_id_uuid, type: UUID }
+  - changeSet:
+      id: 4d-populate-action-tables-fk # <-- NEW, UNIQUE ID
+      author: eduard
+      changes:
+        - sql:
+            comment: "Update attack_actions with the new campaign UUIDs."
+            sql: "UPDATE attack_actions aa SET campaign_id_uuid = (SELECT c.id_uuid FROM campaigns c WHERE c.id = aa.campaign_id);"
+        - sql:
+            comment: "Update movement_actions with the new campaign UUIDs."
+            sql: "UPDATE movement_actions ma SET campaign_id_uuid = (SELECT c.id_uuid FROM campaigns c WHERE c.id = ma.campaign_id);"
+
+  # STEP 5: The rest of the migration, which has not run yet.
+  # This part can now include the logic for ALL tables.
+  - changeSet:
+      id: 5-drop-old-structure
+      author: eduard
+      changes:
+        # Drop FKs from the deepest tables first
+        - dropForeignKeyConstraint: # ADDED for attack_actions
+            baseTableName: attack_actions
+            constraintName: attack_actions_turn_index_campaign_id_fkey
+        - dropForeignKeyConstraint: # ADDED for movement_actions
+            baseTableName: movement_actions
+            constraintName: movement_actions_turn_index_campaign_id_fkey
+
+        # Now drop FKs from the next level up
+        - dropForeignKeyConstraint:
+            baseTableName: campaign_actors
+            constraintName: campaign_actors_campaign_fkey
+        - dropForeignKeyConstraint:
+            baseTableName: campaign_members
+            constraintName: campaign_members_campaign_fkey
+        - dropForeignKeyConstraint:
+            baseTableName: turns
+            constraintName: turns_campaign_fkey
+
+        # Now drop the Primary Keys that are dependencies
+        - dropPrimaryKey:
+            tableName: turns
+            constraintName: turns_pkey
+        - dropPrimaryKey:
+            tableName: campaigns
+            constraintName: campaigns_pkey
+
+        # Now drop all the old integer columns
+        - dropColumn:
+            tableName: campaigns
+            columnName: id
+        - dropColumn:
+            tableName: campaign_actors
+            columnName: campaign
+        - dropColumn:
+            tableName: campaign_members
+            columnName: campaign
+        - dropColumn:
+            tableName: turns
+            columnName: campaign
+        - dropColumn: # ADDED for attack_actions
+            tableName: attack_actions
+            columnName: campaign_id
+        - dropColumn: # ADDED for movement_actions
+            tableName: movement_actions
+            columnName: campaign_id
+
+  # STEP 6: RENAME ALL the new columns
+  - changeSet:
+      id: 6-rename-new-columns
+      author: eduard
+      changes:
+        - renameColumn:
+            tableName: campaigns
+            oldColumnName: id_uuid
+            newColumnName: id
+        - renameColumn:
+            tableName: campaign_actors
+            oldColumnName: campaign_uuid
+            newColumnName: campaign
+        - renameColumn:
+            tableName: campaign_members
+            oldColumnName: campaign_uuid
+            newColumnName: campaign
+        - renameColumn:
+            tableName: turns
+            oldColumnName: campaign_uuid
+            newColumnName: campaign
+        - renameColumn: # ADDED for attack_actions
+            tableName: attack_actions
+            oldColumnName: campaign_id_uuid
+            newColumnName: campaign_id
+        - renameColumn: # ADDED for movement_actions
+            tableName: movement_actions
+            oldColumnName: campaign_id_uuid
+            newColumnName: campaign_id
+
+  # STEP 7: Re-create ALL constraints
+  - changeSet:
+      id: 7-recreate-constraints
+      author: eduard
+      changes:
+        # Add primary keys back first
+        - addPrimaryKey:
+            tableName: campaigns
+            columnNames: id
+            constraintName: campaigns_pkey
+        - addPrimaryKey:
+            tableName: turns
+            columnNames: index, campaign
+            constraintName: turns_pkey
+
+        # Make sure FK columns are not nullable
+        - addNotNullConstraint:
+            tableName: campaign_members
+            columnName: campaign
+        - addNotNullConstraint:
+            tableName: campaign_actors
+            columnName: campaign
+        - addNotNullConstraint:
+            tableName: turns
+            columnName: campaign
+        - addNotNullConstraint: # ADDED for attack_actions
+            tableName: attack_actions
+            columnName: campaign_id
+        - addNotNullConstraint: # ADDED for movement_actions
+            tableName: movement_actions
+            columnName: campaign_id
+
+        # Re-create all foreign key constraints
+        - addForeignKeyConstraint:
+            baseTableName: campaign_members
+            baseColumnNames: campaign
+            referencedTableName: campaigns
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: fk_campaign_members_campaign
+        - addForeignKeyConstraint:
+            baseTableName: campaign_actors
+            baseColumnNames: campaign
+            referencedTableName: campaigns
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: fk_campaign_actors_campaign
+        - addForeignKeyConstraint:
+            baseTableName: turns
+            baseColumnNames: campaign
+            referencedTableName: campaigns
+            referencedColumnNames: id
+            constraintName: turns_campaign_fkey
+        - addForeignKeyConstraint: # ADDED for attack_actions
+            baseTableName: attack_actions
+            baseColumnNames: turn_index, campaign_id
+            referencedTableName: turns
+            referencedColumnNames: index, campaign
+            constraintName: attack_actions_turn_index_campaign_id_fkey
+        - addForeignKeyConstraint: # ADDED for movement_actions
+            baseTableName: movement_actions
+            baseColumnNames: turn_index, campaign_id
+            referencedTableName: turns
+            referencedColumnNames: index, campaign
+            constraintName: movement_actions_turn_index_campaign_id_fkey
