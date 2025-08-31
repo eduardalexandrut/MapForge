@@ -9,6 +9,7 @@ import com.example.mapforge.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CampaignService {
@@ -19,11 +20,10 @@ public class CampaignService {
     }
 
     public Optional<Campaign> createCampaign(Campaign campaign) {
-        //TODO create a random string id and set it
        return Optional.of(campaignRepository.save(campaign));
     }
 
-    public Optional<Campaign> updateCampaign(Integer id, Campaign updatedCampaign) {
+    public Optional<Campaign> updateCampaign(String id, Campaign updatedCampaign) {
         Optional<Campaign> oldCampaign = campaignRepository.findById(id);
 
         if (oldCampaign.isEmpty()) {
@@ -44,7 +44,7 @@ public class CampaignService {
     }
 
     //FIXME set value null to fks
-    public Optional<com.example.mapforge.model.entity.Campaign> deleteCampaign(Integer id) {
+    public Optional<Campaign> deleteCampaign(String id) {
         Optional<Campaign> campaign = campaignRepository.findById(id);
 
         if (campaign.isEmpty()) {

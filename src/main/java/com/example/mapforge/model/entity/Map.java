@@ -31,7 +31,4 @@ public class Map {
     @Column(name = "height", nullable = false)
     private Integer height;
 
-    @OneToMany(mappedBy = "map")
-    private Set<Campaign> campaigns = new LinkedHashSet<>();
-
 }

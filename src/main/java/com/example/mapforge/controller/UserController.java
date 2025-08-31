@@ -33,19 +33,5 @@ public class UserController {
         return userRepository.findById(id).orElse(null);
     }
 
-    // PUT /api/v1/users/{id} -> update a user
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
-        return userService.updateUser(id, user)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
-    // DELETE /api/v1/users/{id} -> delete a user
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
-        return userService.deleteUser(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
 }

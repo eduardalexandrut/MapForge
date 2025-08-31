@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,5 +18,5 @@ public class TurnPK implements Serializable {
     private int index;
 
     @Column(name = "campaignId")
-    private Long campaignId;
+    private UUID campaignId;
 }

@@ -1,5 +1,6 @@
 package com.example.mapforge.controller;
 
+import com.example.mapforge.model.dto.CampaignDTO;
 import com.example.mapforge.model.entity.Campaign;
 import com.example.mapforge.model.entity.Character;
 import com.example.mapforge.repository.CampaignRepository;
@@ -11,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/campaigns")
 public class CampaignController {
 
@@ -40,13 +42,13 @@ public class CampaignController {
 
     // GET /api/campaigns/{id} → single campaigns by id
     @GetMapping("/{id}")
-    public Campaign getCampaignById(@PathVariable Integer id) {
-        return campaignRepository.findById(id).orElse(null);
+    public CampaignDTO getCampaignById(@PathVariable String id) {
+        return campaignRepository.findById(id).map(CampaignDTO::fromEntity).orElse(null);
     }
 
     // PUT /api/v1/campaigns/{id} -> update a campaign
     @PutMapping("/{id}")
-    public ResponseEntity<Campaign> updateCampaign(@PathVariable Integer id, @RequestBody Campaign campaign) {
+    public ResponseEntity<Campaign> updateCampaign(@PathVariable String id, @RequestBody Campaign campaign) {
         return campaignService.updateCampaign(id, campaign)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -54,7 +56,7 @@ public class CampaignController {
 
     // DELETE /api/v1/campaigns/{id} -> delete a campaign
     @DeleteMapping("/{id}")
-    public ResponseEntity<Campaign> deleteCampaign(@PathVariable Integer id) {
+    public ResponseEntity<Campaign> deleteCampaign(@PathVariable String id) {
         return campaignService.deleteCampaign(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
