@@ -9,6 +9,7 @@ import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class CampaignMemberPK implements Serializable {
     private Integer ownerId;
 
     @Column(name = "campaign", nullable = false)
-    private Integer campaignId;
+    private UUID campaignId;
 
     @Override
     public boolean equals(Object o) {

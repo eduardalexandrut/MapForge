@@ -15,6 +15,7 @@ public class CampaignActor {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "campaign", nullable = false)
     private Campaign campaign;
 
     private String type;

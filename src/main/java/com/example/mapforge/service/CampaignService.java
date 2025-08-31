@@ -1,6 +1,8 @@
 package com.example.mapforge.service;
 
 import com.example.mapforge.model.dto.AuthResponseDTO;
+import com.example.mapforge.model.dto.CampaignDetailDTO;
+import com.example.mapforge.model.dto.CampaignSummaryDTO;
 import com.example.mapforge.model.entity.Campaign;
 import com.example.mapforge.model.entity.Character;
 import com.example.mapforge.model.entity.User;
@@ -8,8 +10,11 @@ import com.example.mapforge.repository.CampaignRepository;
 import com.example.mapforge.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CampaignService {
@@ -23,28 +28,28 @@ public class CampaignService {
        return Optional.of(campaignRepository.save(campaign));
     }
 
-    public Optional<Campaign> updateCampaign(String id, Campaign updatedCampaign) {
-        Optional<Campaign> oldCampaign = campaignRepository.findById(id);
-
-        if (oldCampaign.isEmpty()) {
-            return Optional.empty();
-        }
-
-        oldCampaign.get().setName(
-                Optional.ofNullable(updatedCampaign.getName()).orElse(oldCampaign.get().getName())
-        );
-        oldCampaign.get().setDescription(
-                Optional.ofNullable(updatedCampaign.getDescription()).orElse(oldCampaign.get().getDescription())
-        );
-        oldCampaign.get().setMap(
-                Optional.ofNullable(updatedCampaign.getMap()).orElse(oldCampaign.get().getMap())
-        );
-
-        return Optional.of(campaignRepository.save(oldCampaign.get()));
+    public Set<CampaignSummaryDTO> findAllCampaignSummaries() {
+        return campaignRepository.findAll().stream()
+                .map(CampaignSummaryDTO::fromEntity)
+                .collect(Collectors.toSet());
     }
 
+    public Optional<CampaignDetailDTO> updateCampaign(String id, CampaignDetailDTO updatedCampaign) {
+        return campaignRepository.findById(id)
+                .map(oldCampaign -> {
+                    oldCampaign.setName(Optional.ofNullable(updatedCampaign.name()).orElse(oldCampaign.getName()));
+                    oldCampaign.setDescription(Optional.ofNullable(updatedCampaign.description()).orElse(oldCampaign.getDescription()));
+                    oldCampaign.setMap(Optional.ofNullable(updatedCampaign.map()).orElse(oldCampaign.getMap()));
+
+                    Campaign savedCampaign = campaignRepository.save(oldCampaign);
+
+                    return CampaignDetailDTO.fromEntity(savedCampaign);
+                });
+    }
+
+
     //FIXME set value null to fks
-    public Optional<Campaign> deleteCampaign(String id) {
+    public Optional<CampaignSummaryDTO> deleteCampaign(String id) {
         Optional<Campaign> campaign = campaignRepository.findById(id);
 
         if (campaign.isEmpty()) {
@@ -52,6 +57,6 @@ public class CampaignService {
         }
 
         campaignRepository.deleteById(id);
-        return campaign;
+        return Optional.of(CampaignSummaryDTO.fromEntity(campaign.get()));
     }
 }

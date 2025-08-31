@@ -1,18 +1,16 @@
 package com.example.mapforge.controller;
 
-import com.example.mapforge.model.dto.CampaignDTO;
+import com.example.mapforge.model.dto.CampaignDetailDTO;
+import com.example.mapforge.model.dto.CampaignSummaryDTO;
 import com.example.mapforge.model.entity.Campaign;
-import com.example.mapforge.model.entity.Character;
+import com.example.mapforge.model.entity.CampaignMember;
 import com.example.mapforge.repository.CampaignRepository;
-import com.example.mapforge.repository.CharacterRepository;
 import com.example.mapforge.service.CampaignService;
-import com.example.mapforge.service.CharacterService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/campaigns")
@@ -36,19 +34,25 @@ public class CampaignController {
 
     // GET /api/campaigns → all campaigns
     @GetMapping
-    public List<Campaign> getAllCampaigns() {
-        return campaignRepository.findAll();
+    public Set<CampaignSummaryDTO> getAllCampaignSummaries() {
+        return campaignService.findAllCampaignSummaries();
     }
 
     // GET /api/campaigns/{id} → single campaigns by id
     @GetMapping("/{id}")
-    public CampaignDTO getCampaignById(@PathVariable String id) {
-        return campaignRepository.findById(id).map(CampaignDTO::fromEntity).orElse(null);
+    public CampaignDetailDTO getCampaignById(@PathVariable String id) {
+        return campaignRepository.findById(id).map(CampaignDetailDTO::fromEntity).orElse(null);
     }
+
+    // GET /api/v1/campaigns/{id}/campaign_members -> members of a campaign
+//    @GetMapping("/{id}/campaign_members")
+//    public Set<CampaignMemberDetailDTO> getCampaignMembersByCampaignId(@PathVariable String id) {
+//        return campaignRepository.findById(id).map(CampaignDetailDTO::fromEntity).orElse(null);
+//    }
 
     // PUT /api/v1/campaigns/{id} -> update a campaign
     @PutMapping("/{id}")
-    public ResponseEntity<Campaign> updateCampaign(@PathVariable String id, @RequestBody Campaign campaign) {
+    public ResponseEntity<CampaignDetailDTO> updateCampaign(@PathVariable String id, @RequestBody CampaignDetailDTO campaign) {
         return campaignService.updateCampaign(id, campaign)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -56,7 +60,7 @@ public class CampaignController {
 
     // DELETE /api/v1/campaigns/{id} -> delete a campaign
     @DeleteMapping("/{id}")
-    public ResponseEntity<Campaign> deleteCampaign(@PathVariable String id) {
+    public ResponseEntity<CampaignSummaryDTO> deleteCampaign(@PathVariable String id) {
         return campaignService.deleteCampaign(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

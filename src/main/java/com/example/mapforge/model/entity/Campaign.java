@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -26,5 +27,11 @@ public class Campaign {
     @ManyToOne(optional = false)
     @JoinColumn(name = "map", nullable = false)
     private Map map;
+
+    @OneToMany(mappedBy = "campaign", fetch = FetchType.EAGER)
+    private Set<CampaignMember> campaignMembers;
+
+    @OneToMany(mappedBy = "campaign", fetch = FetchType.EAGER)
+    private Set<CampaignActor> campaignActors;
 
 }
