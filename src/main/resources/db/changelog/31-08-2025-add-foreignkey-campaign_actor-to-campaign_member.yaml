@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: campaign_actors
+            columns:
+              - column:
+                  name: owner
+                  type: INT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: campaign_actors
+            baseColumnNames: owner, campaign
+            referencedTableName: campaign_members
+            referencedColumnNames: owner, campaign
+            onDelete: CASCADE
+            constraintName: fk_campaign_actors_campaign_members

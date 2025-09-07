@@ -552,3 +552,5 @@ databaseChangeLog:
     file: src/main/resources/db/changelog/26-08-2025-remove-test-column-from-users.yaml
 - include:
     file: src/main/resources/db/changelog/30-08-2025-change-campaigns-pk-to-string.yaml
+- include:
+    file: src/main/resources/db/changelog/31-08-2025-add-foreignkey-campaign_actor-to-campaign_member.yaml

@@ -19,7 +19,8 @@ public class CampaignActor {
     private Campaign campaign;
 
     private String type;
-    
+
+    //Reference fk to either Character ot Npc template
     @Column(name = "ref_id", nullable = false)
     private Integer refId;
     
