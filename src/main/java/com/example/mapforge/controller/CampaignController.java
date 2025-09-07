@@ -1,6 +1,7 @@
 package com.example.mapforge.controller;
 
 import com.example.mapforge.model.dto.CampaignDetailDTO;
+import com.example.mapforge.model.dto.CampaignMemberDetailDTO;
 import com.example.mapforge.model.dto.CampaignSummaryDTO;
 import com.example.mapforge.model.entity.Campaign;
 import com.example.mapforge.model.entity.CampaignMember;

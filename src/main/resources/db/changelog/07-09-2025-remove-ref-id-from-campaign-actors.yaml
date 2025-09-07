@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: eduard
+      changes:
+        - dropColumn:
+            tableName: campaign_actors
+            columnName: ref_id

@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: eduard
+      changes:
+        - addColumn:
+            tableName: campaign_actors
+            columns:
+              - column:
+                  name: character
+                  type: INT
+              - column:
+                  name: npc
+                  type: INT
+        - addForeignKeyConstraint:
+              baseTableName: campaign_actors
+              baseColumnNames: character
+              referencedTableName: characters
+              referencedColumnNames: id
+              onDelete: CASCADE
+              constraintName: fk_campaign_actors_characters
+        - addForeignKeyConstraint:
+            baseTableName: campaign_actors
+            baseColumnNames: npc
+            referencedTableName: npcs
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: fk_campaign_actors_npcs

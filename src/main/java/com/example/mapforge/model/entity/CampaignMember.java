@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -24,6 +26,9 @@ public class CampaignMember {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "campaign", nullable = false)
     private Campaign campaign;
+
+    @OneToMany(mappedBy = "campaignMember", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CampaignActor> campaignActors;
 
     @Column(name = "role", nullable = false, length = 10)
     private String role;

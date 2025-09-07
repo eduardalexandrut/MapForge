@@ -82,7 +82,6 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     //Hibernate tools
-    implementation("org.hibernate:hibernate-tools:5.5.7.Final")
     implementation("org.hibernate:hibernate-core:6.3.0.Final")
 
     //Liquibase

@@ -8,16 +8,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public record CampaignDetailDTO(UUID id, String name, String description, Map map,
-                                Set<CampaignMemberSummaryDTO> members,
-                                Set<CampaignActorSummaryDTO> actors) {
+                                Set<CampaignMemberDetailDTO> members) {
     public static CampaignDetailDTO fromEntity(Campaign campaign) {
         return new CampaignDetailDTO(
                 campaign.getId(),
                 campaign.getName(),
                 campaign.getDescription(),
                 campaign.getMap(),
-                campaign.getCampaignMembers().stream().map(CampaignMemberSummaryDTO::fromEntity).collect(Collectors.toSet()),
-                campaign.getCampaignActors().stream().map(CampaignActorSummaryDTO::fromEntity).collect(Collectors.toSet())
+                campaign.getCampaignMembers().stream().map(CampaignMemberDetailDTO::fromEntity).collect(Collectors.toSet())
         );
     }
 }
