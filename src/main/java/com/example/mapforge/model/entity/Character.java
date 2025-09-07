@@ -47,4 +47,5 @@ public class Character {
     @Column(name = "alignment", nullable = false)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private Alignment alignment;
+
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,5 +35,8 @@ public class User {
 
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
+
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+    private Set<Character> characters;
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/campaigns")
@@ -35,7 +36,7 @@ public class CampaignController {
 
     // GET /api/campaigns → all campaigns
     @GetMapping
-    public Set<CampaignSummaryDTO> getAllCampaignSummaries() {
+    public Set<CampaignSummaryDTO> getAllCampaigns() {
         return campaignService.findAllCampaignSummaries();
     }
 
@@ -46,10 +47,12 @@ public class CampaignController {
     }
 
     // GET /api/v1/campaigns/{id}/campaign_members -> members of a campaign
-//    @GetMapping("/{id}/campaign_members")
-//    public Set<CampaignMemberDetailDTO> getCampaignMembersByCampaignId(@PathVariable String id) {
-//        return campaignRepository.findById(id).map(CampaignDetailDTO::fromEntity).orElse(null);
-//    }
+    @GetMapping("/{id}/campaign_members")
+    public Set<CampaignMemberDetailDTO> getCampaignMembersByCampaignId(@PathVariable String id) {
+        return campaignRepository.findById(id).stream()
+                .flatMap(campaign -> campaign.getCampaignMembers().stream().map(CampaignMemberDetailDTO::fromEntity))
+                .collect(Collectors.toSet());
+    }
 
     // PUT /api/v1/campaigns/{id} -> update a campaign
     @PutMapping("/{id}")

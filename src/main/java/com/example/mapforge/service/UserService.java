@@ -1,6 +1,8 @@
 package com.example.mapforge.service;
 
 import com.example.mapforge.model.dto.AuthResponseDTO;
+import com.example.mapforge.model.dto.UserDetailDTO;
+import com.example.mapforge.model.dto.UserSummaryDTO;
 import com.example.mapforge.model.entity.User;
 import com.example.mapforge.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -46,6 +50,14 @@ public class UserService {
 
         String token = jwtService.generateToken(user.get());
         return new AuthResponseDTO(true, "User signed in successfully", token);
+    }
+
+    public Set<UserSummaryDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(UserSummaryDTO::fromEntity).collect(Collectors.toSet());
+    }
+
+    public UserDetailDTO getUserById(Integer id) {
+        return userRepository.findById(id).map(UserDetailDTO::fromEntity).orElse(null);
     }
 
     public Optional<User> updateUser(Integer id, User updatedUser) {

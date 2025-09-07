@@ -1,5 +1,7 @@
 package com.example.mapforge.controller;
 
+import com.example.mapforge.model.dto.CharacterDetailDTO;
+import com.example.mapforge.model.dto.CharacterSummaryDTO;
 import com.example.mapforge.model.entity.Character;
 import com.example.mapforge.model.entity.User;
 import com.example.mapforge.repository.CharacterRepository;
@@ -8,30 +10,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/characters")
 public class CharacterController {
 
-    private final CharacterRepository characterRepository;
-
     private final CharacterService characterService;
 
-    public CharacterController(CharacterRepository characterRepository, CharacterService characterService) {
-        this.characterRepository = characterRepository;
+    public CharacterController(CharacterService characterService) {
         this.characterService = characterService;
     }
 
     // GET /api/characters → all characters
     @GetMapping
-    public List<Character> getAllCharacters() {
-        return characterRepository.findAll();
+    public Set<CharacterSummaryDTO> getAllCharacters() {
+        return characterService.getAllCharacters();
     }
 
     // GET /api/characters/{id} → single characters by id
     @GetMapping("/{id}")
-    public Character getCharacterById(@PathVariable Integer id) {
-        return characterRepository.findById(id).orElse(null);
+    public CharacterDetailDTO getCharacterById(@PathVariable Integer id) {
+        return characterService.getCharacterById(id);
     }
 
     // PUT /api/v1/characters/{id} -> update a character
