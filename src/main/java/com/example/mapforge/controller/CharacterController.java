@@ -36,7 +36,7 @@ public class CharacterController {
 
     // PUT /api/v1/characters/{id} -> update a character
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable Integer id, @RequestBody Character character) {
+    public ResponseEntity<CharacterDetailDTO> updateCharacter(@PathVariable Integer id, @RequestBody Character character) {
         return characterService.updateCharacter(id, character)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -44,7 +44,7 @@ public class CharacterController {
 
     // DELETE /api/v1/characters/{id} -> delete a character
     @DeleteMapping("/{id}")
-    public ResponseEntity<Character> deleteCharacter(@PathVariable Integer id) {
+    public ResponseEntity<CharacterSummaryDTO> deleteCharacter(@PathVariable Integer id) {
         return characterService.deleteCharacter(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

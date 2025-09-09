@@ -27,7 +27,7 @@ public class CharacterService {
         return this.characterRepository.findById(id).map(CharacterDetailDTO::fromEnity).orElse(null);
     }
 
-    public Optional<Character> updateCharacter(Integer id, Character updatedCharacter) {
+    public Optional<CharacterDetailDTO> updateCharacter(Integer id, Character updatedCharacter) {
         Optional<Character> oldCharacter = characterRepository.findById(id);
 
         if (oldCharacter.isEmpty()) {
@@ -53,11 +53,11 @@ public class CharacterService {
                 Optional.ofNullable(updatedCharacter.getRace()).orElse(oldCharacter.get().getRace())
         );
 
-        return Optional.of(characterRepository.save(oldCharacter.get()));
+        return Optional.of(CharacterDetailDTO.fromEnity(characterRepository.save(oldCharacter.get())));
     }
 
     //FIXME set value null to fks
-    public Optional<Character> deleteCharacter(Integer id) {
+    public Optional<CharacterSummaryDTO> deleteCharacter(Integer id) {
         Optional<Character> character = characterRepository.findById(id);
 
         if (character.isEmpty()) {
@@ -65,6 +65,6 @@ public class CharacterService {
         }
 
         characterRepository.deleteById(id);
-        return character;
+        return Optional.of(CharacterSummaryDTO.fromEnity(character.get()));
     }
 }
